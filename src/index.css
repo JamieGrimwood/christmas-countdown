@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #1d232b;
+}
+
 :root .day-countdown {
   line-height: 1em;
 }
