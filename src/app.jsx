@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import Snowfall from 'react-snowfall';
 import { motion } from 'framer-motion';
 
 export function App() {
     const [songSelectionId, setSongSelectionId] = useState("ab67616d0000b273a846d54ce684aff97bcaf255");
-    const [songSelectionName, setSongSelectionName] = useState("Ronettes - Sleigh Bells (PhatCap! Trap Remix)");
+    const songSelectionName = useRef("Ronettes - Sleigh Bells (PhatCap! Trap Remix)")
     const [song, setSong] = useState();
 
     const [seconds, setSeconds] = useState(0);
@@ -46,21 +46,24 @@ export function App() {
 
     const onSongChange = (e) => {
         setSongSelectionId(e.target.value)
-        setSongSelectionName(e.target.options[e.target.selectedIndex].innerHTML)
+        songSelectionName.current = e.target.options[e.target.selectedIndex].innerHTML
+        setTimeout(() => {
+            playMusic()
+        }, 10)
     }
 
     const playMusic = (e) => {
-        e.preventDefault()
-        setSong(songSelectionName)
+        if (e) e.preventDefault()
         const audio = document.getElementById("audio")
         audio.src = `${songSelectionId}.mp3`
         audio.load()
+        audio.currentTime = 0;
         audio.play()
-        setSong(songSelectionName)
+        setSong(songSelectionName.current)
     }
 
     const stopMusic = (e) => {
-        e.preventDefault()
+        if (e) e.preventDefault()
         setSong(null)
         const audio = document.getElementById("audio")
         audio.pause()
@@ -81,10 +84,7 @@ export function App() {
             window.addEventListener(eventName, () => {
                 if (!played) {
                     try {
-                        const e = {
-                            preventDefault: () => null
-                        }
-                        playMusic(e)
+                        playMusic()
                         played = true;
                     } catch (e) {
                         console.warn(e.message);
@@ -129,7 +129,8 @@ export function App() {
                             <span className="label-text">Pick a song</span>
                         </label>
                         <select onChange={onSongChange} className="select select-bordered">
-                            <option value="ab67616d0000b273a846d54ce684aff97bcaf255">Ronettes - Sleigh Bells (PhatCap! Trap Remix)</option>
+                            <option value="ab67616d0000b273a846d54ce684aff97bcaf255" selected>Ronettes - Sleigh Bells (PhatCap! Trap Remix)</option>
+                            <option value="ab67616d0000b273b6a828698993ac84d4f0b1de">Bobby Helms - Jingle Bells Rock</option>
                         </select>
                     </div>
                     <div className="flex flex-row justify-center gap-4 mt-4">
