@@ -2,4 +2,7 @@ import { render } from 'preact'
 import { App } from './app.jsx'
 import './index.css'
 
-render(<App />, document.getElementById('app'))
+render(
+    <div data-theme="dark">
+        <App />
+    </div>, document.getElementById('app'))

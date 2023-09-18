@@ -76,7 +76,7 @@ export function App() {
         });
 
         let played = false
-        const events = ["click", "mousemove", "mouseover", "mousemove", "touchmove", "focus"]
+        const events = ["click"]
         events.forEach((eventName) => {
             window.addEventListener(eventName, () => {
                 if (!played) {
