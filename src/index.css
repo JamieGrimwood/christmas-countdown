@@ -26,13 +26,8 @@ body {
   }
 }
 
-.flier-snowman {
-  pointer-events: none;
-}
-
 .flier-snowman>* {
   animation: fly-snowman 30s linear infinite;
-  pointer-events: none !important;
   top: 0;
   left: 0;
   transform: translateX(-120%) translateY(-120%) rotateZ(0);
@@ -80,4 +75,80 @@ body {
   95% {
     transform: translateX(10vw) translateY(100vh) rotateZ(0deg)
   }
+}
+
+.flier-santa {
+  pointer-events: none;
+}
+
+.flier-santa>* {
+  /* Adjust animation duration to change the element’s speed */
+  animation: fly-santa 10s linear;
+  pointer-events: none !important;
+  top: 0;
+  left: 0;
+  transform: translateX(-120%) translateY(-120%) rotateZ(0);
+  position: fixed;
+  animation-delay: 1s;
+  z-index: 999999;
+  border-radius: 50%;
+}
+
+/* Keyframe values control where the element will begin
+  and end its trajectory across the screen. Each rule
+  represents a path the element follows across the screen. */
+
+
+@keyframes fly-santa {
+  0% {
+    display: block;
+    transform: translateY(-100px) translateX(-30vw) rotateZ(0deg)
+  }
+
+  20% {
+    transform: translateY(-100px) translateX(0vw) rotateZ(10deg)
+  }
+
+  40% {
+    transform: translateY(-100px) translateX(25vw) rotateZ(0deg)
+  }
+
+  60% {
+    transform: translateY(-100px) translateX(50vw) rotateZ(-10deg)
+  }
+
+  80% {
+    transform: translateY(-100px) translateX(75vw) rotateZ(0deg)
+  }
+
+  100%,
+  99% {
+    transform: translateY(-100px) translateX(100vw) rotateZ(10deg)
+  }
+}
+
+.flier-santa-nofly {
+  pointer-events: none;
+}
+
+.flier-santa-nofly>* {
+  /* Adjust animation duration to change the element’s speed */
+  pointer-events: none !important;
+  top: 0;
+  left: 0;
+  transform: translateX(-120%) translateY(-120%) rotateZ(0);
+  position: fixed;
+  animation-delay: 1s;
+  z-index: 999999;
+  border-radius: 50%;
+}
+
+.elf {
+  pointer-events: none !important;
+  top: 0;
+  left: 0;
+  transform: translateX(-50%);
+  position: fixed;
+  z-index: 999999;
+  border-radius: 50%;
 }

@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import Snowfall from 'react-snowfall';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
+
+import Elf from './Components/Elf';
 
 export function App() {
-    const [songSelectionId, setSongSelectionId] = useState("ab67616d0000b273a846d54ce684aff97bcaf255");
-    const songSelectionName = useRef("Ronettes - Sleigh Bells (PhatCap! Trap Remix)")
-    const [song, setSong] = useState();
+    const songSelectionId = useRef("ab67616d0000b273a846d54ce684aff97bcaf255");
+    const songSelectionName = useRef("Ronettes - Sleigh Bells (PhatCap! Trap Remix)");
+    const song = useRef();
+    const songId = useRef();
+    const snowflakeCount = useRef(150);
 
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -21,6 +26,16 @@ export function App() {
         const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+        if (seconds === 0) {
+            document.getElementById('santa').classList.remove('flier-santa-nofly')
+            document.getElementById('santa').classList.add('flier-santa')
+            setTimeout(() => {
+                document.getElementById('santa').classList.remove('flier-santa')
+                document.getElementById('santa').classList.add('flier-santa-nofly')
+            }, 15000)
+        }
+
         return ({ seconds, minutes, hours, days })
     }
 
@@ -45,7 +60,7 @@ export function App() {
     }, [])
 
     const onSongChange = (e) => {
-        setSongSelectionId(e.target.value)
+        songSelectionId.current = e.target.value
         songSelectionName.current = e.target.options[e.target.selectedIndex].innerHTML
         setTimeout(() => {
             playMusic()
@@ -55,16 +70,18 @@ export function App() {
     const playMusic = (e) => {
         if (e) e.preventDefault()
         const audio = document.getElementById("audio")
-        audio.src = `${songSelectionId}.mp3`
+        audio.src = `${songSelectionId.current}.mp3`
         audio.load()
         audio.currentTime = 0;
         audio.play()
-        setSong(songSelectionName.current)
+        song.current = songSelectionName.current
+        songId.current = songSelectionId.current
     }
 
     const stopMusic = (e) => {
         if (e) e.preventDefault()
-        setSong(null)
+        song.current = null
+        songId.current = null
         const audio = document.getElementById("audio")
         audio.pause()
         audio.currentTime = 0;
@@ -75,42 +92,94 @@ export function App() {
         audio.addEventListener("ended", function () {
             audio.currentTime = 0
             audio.src = ""
-            setSong(null)
-        });
-
-        let played = false
-        const events = ["click"]
-        events.forEach((eventName) => {
-            window.addEventListener(eventName, () => {
-                if (!played) {
-                    try {
-                        playMusic()
-                        played = true;
-                    } catch (e) {
-                        console.warn(e.message);
-                    }
-                }
-            });
+            song.current = null
+            songId.current = null
         });
     }, [])
 
+    const activateSnowStorm = () => {
+        if (snowflakeCount.current === 150) {
+            toast.success('5 SECOND SNOW BLIZZARD ACTIVATED!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+            snowflakeCount.current = 2000
+            setTimeout(() => {
+                snowflakeCount.current = 150
+            }, 5000)
+        }
+    }
+
     return (
         <>
-            <Snowfall />
-            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" /></div>
-            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" /></div>
+            <Snowfall snowflakeCount={snowflakeCount.current} />
+            <ul class="lightrope">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <div id="santa" className="flier-santa-nofly"><img src="/santa.png" width="500" height="200" /></div>
+            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" /></div>
+            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" /></div>
+            <Elf />
             <audio id="audio" style="display: none;" />
             <motion.div
                 className="box"
                 initial={{ y: -200 }}
-                animate={{ y: song ? 0 : -200 }}
+                animate={{ y: song.current ? 0 : -210 }}
                 transition={{ type: "spring" }}
             >
                 <div className="fixed top-4 left-1/2 transform -translate-x-1/2">
                     <div className="card w-96 bg-neutral text-neutral-content">
                         <div className="card-body items-center text-center">
+                            <img src={`${songId.current}.jpeg`} width="80" height="80" className="rounded" />
                             <h2 className="card-title">Currently Playing:</h2>
-                            <p>{song}</p>
+                            <p>{song.current}</p>
                         </div>
                     </div>
                 </div>
@@ -119,9 +188,9 @@ export function App() {
                 <form method="dialog" className="modal-box">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     <h1 className="text-3xl font-bold text-center underline">Music</h1>
-                    {song &&
+                    {song.current &&
                         <div className="text-center m-1">
-                            <p>Currently Playing: {song}</p>
+                            <p>Currently Playing: {song.current}</p>
                         </div>
                     }
                     <div className="flex items-center form-control w-full">
@@ -131,11 +200,12 @@ export function App() {
                         <select onChange={onSongChange} className="select select-bordered">
                             <option value="ab67616d0000b273a846d54ce684aff97bcaf255" selected>Ronettes - Sleigh Bells (PhatCap! Trap Remix)</option>
                             <option value="ab67616d0000b273b6a828698993ac84d4f0b1de">Bobby Helms - Jingle Bells Rock</option>
+                            <option value="ab67616d0000b273119e4094f07a8123b471ac1d">Michael Bublé - Frosty The Snowman (ft. The Puppini Sisters)</option>
                         </select>
                     </div>
                     <div className="flex flex-row justify-center gap-4 mt-4">
-                        <button onClick={playMusic} className="btn" disabled={song}>Play</button>
-                        <button onClick={stopMusic} className="btn" disabled={!song}>Stop</button>
+                        <button onClick={playMusic} className="btn" disabled={song.current}>Play</button>
+                        <button onClick={stopMusic} className="btn" disabled={!song.current}>Stop</button>
                     </div>
                 </form>
                 <form method="dialog" className="modal-backdrop">
