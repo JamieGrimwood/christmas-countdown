@@ -10,7 +10,7 @@ export function App() {
     const songSelectionName = useRef("Ronettes - Sleigh Bells (PhatCap! Trap Remix)");
     const song = useRef();
     const songId = useRef();
-    const snowflakeCount = useRef(150);
+    const snowStorm = useRef(false);
 
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -98,10 +98,10 @@ export function App() {
     }, [])
 
     const activateSnowStorm = () => {
-        if (snowflakeCount.current === 150) {
-            toast.success('5 SECOND SNOW BLIZZARD ACTIVATED!', {
+        if (snowStorm.current === false) {
+            toast.success('SNOW BLIZZARD ACTIVATED!', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 6000,
                 hideProgressBar: false,
                 closeOnClick: false,
                 pauseOnHover: false,
@@ -109,16 +109,23 @@ export function App() {
                 progress: undefined,
                 theme: "colored",
             });
-            snowflakeCount.current = 2000
+            snowStorm.current = true
             setTimeout(() => {
-                snowflakeCount.current = 150
-            }, 5000)
+                snowStorm.current = false
+            }, 6000)
         }
     }
 
     return (
         <>
-            <Snowfall snowflakeCount={snowflakeCount.current} />
+            <Snowfall />
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: snowStorm.current ? 1 : 0 }}
+                transition={{ duration: 3 }}
+            >
+                <Snowfall snowflakeCount={2000} />
+            </motion.div >
             <ul class="lightrope">
                 <li></li>
                 <li></li>
@@ -164,8 +171,8 @@ export function App() {
                 <li></li>
             </ul>
             <div id="santa" className="flier-santa-nofly"><img src="/santa.png" width="500" height="200" /></div>
-            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" /></div>
-            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" /></div>
+            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" onClick={() => activateSnowStorm()} /></div>
+            <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" onClick={() => activateSnowStorm()} /></div>
             <Elf />
             <audio id="audio" style="display: none;" />
             <motion.div
