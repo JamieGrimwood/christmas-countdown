@@ -1,6 +1,7 @@
 import { render } from 'preact';
 import { App } from './app.jsx';
 import { ToastContainer } from 'react-toastify';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 import './index.css';
 import './christmas-lights.css';
@@ -11,3 +12,5 @@ render(
         <App />
         <ToastContainer />
     </div>, document.getElementById('app'))
+
+serviceWorkerRegistration.register();
