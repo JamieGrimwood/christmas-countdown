@@ -184,7 +184,7 @@ export function App() {
                 <div className="fixed top-4 left-1/2 transform -translate-x-1/2">
                     <div className="card w-96 bg-neutral text-neutral-content">
                         <div className="card-body items-center text-center">
-                            <img src={`${songId.current}.jpeg`} width="80" height="80" className="rounded hidden sm:block" />
+                            <img src={song.current && `${songId.current}.jpeg`} width="80" height="80" className="rounded hidden sm:block" />
                             <h2 className="card-title">Currently Playing:</h2>
                             <p>{song.current}</p>
                         </div>
