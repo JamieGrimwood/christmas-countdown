@@ -118,7 +118,7 @@ export function App() {
 
     return (
         <>
-            <Snowfall snowflakeCount={0}/>
+            <Snowfall />
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: snowStorm.current ? 1 : 0 }}
