@@ -209,6 +209,8 @@ export function App() {
                             <option value="ab67616d0000b273b6a828698993ac84d4f0b1de">Bobby Helms - Jingle Bells Rock</option>
                             <option value="ab67616d0000b273119e4094f07a8123b471ac1d">Michael Bublé - Frosty The Snowman (ft. The Puppini Sisters)</option>
                             <option value="ab67616d0000b273f2d2adaa21ad616df6241e7d">Wham! - Last Christmas</option>
+                            <option value="ab67616d0000b2734246e3158421f5abb75abc4f">Mariah Carey - All I Want for Christmas Is You</option>
+                            <option value="ab67616d0000b273ca1cbdfd5e824b2a4bf4a43e">Michael Bublé - Let It Snow!</option>
                         </select>
                     </div>
                     <div className="flex flex-row justify-center gap-4 mt-4">
