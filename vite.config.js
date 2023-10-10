@@ -1,10 +1,34 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { promises as fsPromises } from 'fs';
+import { join } from 'path';
 import { dependencies } from './package.json';
+
+const { readdir: asyncReaddir, stat: asyncStat } = fsPromises;
+
+const getFilesInDir = async (directoryPath) => {
+  try {
+    const files = await asyncReaddir(directoryPath);
+    const filePaths = [];
+
+    for (const file of files) {
+      const filePath = join(directoryPath, file);
+      const stats = await asyncStat(filePath);
+      if (stats.isFile()) {
+        filePaths.push(file);
+      }
+    }
+
+    return filePaths;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const manifestForPlugIn = {
   registerType: 'prompt',
-  includeAssests: ['favicon.ico', "apple-touch-icon.png", "masked-icon.png"],
+  includeAssests: await getFilesInDir('public'),
   manifest: {
     name: "Jamie's Christmas Countdown",
     short_name: "Jamie's Christmas Countdown",
