@@ -174,6 +174,8 @@ export function App() {
             <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" onClick={() => activateSnowStorm()} /></div>
             <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" onClick={() => activateSnowStorm()} /></div>
             <Elf />
+            <img src="tree.gif" width="250" height="250" className="fixed bottom-0 left-0 translate-y-4 hidden sm:block"/>
+            <img src="tree.gif" width="250" height="250" className="fixed bottom-0 right-0 -translate-x-3 translate-y-4 hidden sm:block"/>
             <audio id="audio" style="display: none;" />
             <motion.div
                 className="box"
