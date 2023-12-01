@@ -7,12 +7,9 @@ export default function Elf() {
 
     const countdown = () => {
         show.current = false
-        console.log(1)
         const time = (Math.floor(Math.random() * 10) + 1) * 1000
-        console.log(time)
         setTimeout(() => {
             key.current = key.current + 1
-            console.log(key.current)
             show.current = true
             setTimeout(() => {
                 countdown()

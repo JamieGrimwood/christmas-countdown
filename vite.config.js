@@ -111,4 +111,12 @@ export default defineConfig({
     },
   },
   */
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      mangle: {
+        reserved: ['showDebug()'],
+      },
+    },
+  },
 })

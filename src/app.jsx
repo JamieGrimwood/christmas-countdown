@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import Snowfall from 'react-snowfall';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import * as ackeeTracker from 'ackee-tracker';
 
 import Elf from './Components/Elf';
 
@@ -11,7 +12,9 @@ export function App() {
     const song = useRef();
     const songId = useRef();
     const snowStorm = useRef(false);
+    const instance = useRef();
 
+    const [showCookiePopup, setShowCookiePopup] = useState(false)
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [hours, setHours] = useState(0);
@@ -46,6 +49,15 @@ export function App() {
         setHours(hours)
         setDays(days)
 
+        const acknowledged = localStorage.getItem("acknowledgedCookies")
+        if (acknowledged != "true") setShowCookiePopup(true)
+
+        instance.current = ackeeTracker.create('https://ackee.jmgcoding.com', {
+            ignoreOwnVisits: false,
+            detailed: true
+        })
+        instance.current.record('3e60d19e-0c36-4b00-883b-0763e9a393d3')
+
         const id = setInterval(() => {
             const { seconds, minutes, hours, days } = getTime()
             setSeconds(seconds)
@@ -68,6 +80,7 @@ export function App() {
     }
 
     const playMusic = (e) => {
+        instance.current.action('08801ee5-f436-4abe-97c5-a667ca267529', { key: 'Click', value: 1 })
         if (e) e.preventDefault()
         const audio = document.getElementById("audio")
         audio.src = `${songSelectionId.current}.mp3`
@@ -98,6 +111,7 @@ export function App() {
     }, [])
 
     const activateSnowStorm = () => {
+        instance.current.action('f178697c-0303-41c5-a14f-8822784fc5cc', { key: 'Click', value: 1 })
         if (snowStorm.current === false) {
             toast.success('SNOW BLIZZARD ACTIVATED!', {
                 position: "top-right",
@@ -114,6 +128,12 @@ export function App() {
                 snowStorm.current = false
             }, 6000)
         }
+    }
+
+    const acknowledgedCookies = () => {
+        instance.current.action('aa29eb3a-23c5-4fcc-91ee-641480c42f81', { key: 'Click', value: 1 })
+        localStorage.setItem("acknowledgedCookies", "true")
+        setShowCookiePopup(false)
     }
 
     return (
@@ -170,12 +190,24 @@ export function App() {
                 <li></li>
                 <li></li>
             </ul>
+            {showCookiePopup &&
+                <div className="fixed bottom-10 right-10 z-50 card w-80 bg-neutral text-neutral-content">
+                    <div className="card-body items-center text-center">
+                        <h2 className="card-title text-md">Cookies!</h2>
+                        <p className="text-xs">By using this website, you accept that we use cookies to improve your experience, and make other people's better.</p>
+                        <p className="text-xs underline font-bold">We are not using them to track you!</p>
+                        <div className="card-actions justify-end">
+                            <button className="btn btn-default btn-sm" onClick={() => acknowledgedCookies()}>Okay, cool!</button>
+                        </div>
+                    </div>
+                </div>
+            }
             <div id="santa" className="flier-santa-nofly"><img src="/santa.png" width="500" height="200" /></div>
             <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" onClick={() => activateSnowStorm()} /></div>
             <div className="flier-snowman"><img src="/snowman.jpg" width="200" height="200" draggable="false" onClick={() => activateSnowStorm()} /></div>
             <Elf />
-            <img src="tree.gif" width="250" height="250" className="fixed bottom-0 left-0 translate-y-4 hidden sm:block"/>
-            <img src="tree.gif" width="250" height="250" className="fixed bottom-0 right-0 -translate-x-3 translate-y-4 hidden sm:block"/>
+            <img src="tree.gif" width="250" height="250" className="fixed bottom-0 left-0 translate-y-4 hidden sm:block" />
+            <img src="tree.gif" width="250" height="250" className="fixed bottom-0 right-0 -translate-x-3 translate-y-4 hidden sm:block" />
             <audio id="audio" style="display: none;" />
             <motion.div
                 className="box"
@@ -253,7 +285,7 @@ export function App() {
                             sec
                         </div>
                     </div>
-                    <button onClick={() => window.music_modal.showModal()} className="btn w-fit">
+                    <button onClick={() => { instance.current.action('59126862-ef2e-4b8d-8c1a-c1ac86e5dc65', { key: 'Click', value: 1 }); window.music_modal.showModal() }} className="btn w-fit">
                         Music Controls
                     </button>
                 </div>
