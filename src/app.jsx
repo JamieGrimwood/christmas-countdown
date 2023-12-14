@@ -50,7 +50,7 @@ export function App() {
         setDays(days)
 
         const acknowledged = localStorage.getItem("acknowledgedCookies")
-        if (acknowledged != "true") setShowCookiePopup(true)
+        if (window.parent === window) if (acknowledged != "true") setShowCookiePopup(true)
 
         instance.current = ackeeTracker.create('https://ackee.jmgcoding.com', {
             ignoreOwnVisits: false,
