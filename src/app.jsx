@@ -12,7 +12,7 @@ export function App() {
     const song = useRef();
     const songId = useRef();
     const snowStorm = useRef(false);
-    const instance = useRef();
+    //const instance = useRef();
 
     const [showCookiePopup, setShowCookiePopup] = useState(false)
     const [seconds, setSeconds] = useState(0);
@@ -52,11 +52,13 @@ export function App() {
         const acknowledged = localStorage.getItem("acknowledgedCookies")
         if (window.parent === window) if (acknowledged != "true") setShowCookiePopup(true)
 
+        /*
         instance.current = ackeeTracker.create('https://ackee.jmgcoding.com', {
             ignoreOwnVisits: false,
             detailed: true
         })
         instance.current.record('3e60d19e-0c36-4b00-883b-0763e9a393d3')
+        */
 
         const id = setInterval(() => {
             const { seconds, minutes, hours, days } = getTime()
@@ -80,7 +82,7 @@ export function App() {
     }
 
     const playMusic = (e) => {
-        instance.current.action('08801ee5-f436-4abe-97c5-a667ca267529', { key: 'Click', value: 1 })
+        //instance.current.action('08801ee5-f436-4abe-97c5-a667ca267529', { key: 'Click', value: 1 })
         if (e) e.preventDefault()
         const audio = document.getElementById("audio")
         audio.src = `${songSelectionId.current}.mp3`
@@ -111,7 +113,7 @@ export function App() {
     }, [])
 
     const activateSnowStorm = () => {
-        instance.current.action('f178697c-0303-41c5-a14f-8822784fc5cc', { key: 'Click', value: 1 })
+        //instance.current.action('f178697c-0303-41c5-a14f-8822784fc5cc', { key: 'Click', value: 1 })
         if (snowStorm.current === false) {
             toast.success('SNOW BLIZZARD ACTIVATED!', {
                 position: "top-right",
@@ -131,7 +133,7 @@ export function App() {
     }
 
     const acknowledgedCookies = () => {
-        instance.current.action('aa29eb3a-23c5-4fcc-91ee-641480c42f81', { key: 'Click', value: 1 })
+        //instance.current.action('aa29eb3a-23c5-4fcc-91ee-641480c42f81', { key: 'Click', value: 1 })
         localStorage.setItem("acknowledgedCookies", "true")
         setShowCookiePopup(false)
     }
@@ -292,7 +294,7 @@ export function App() {
                             sec
                         </div>
                     </div>
-                    <button onClick={() => { instance.current.action('59126862-ef2e-4b8d-8c1a-c1ac86e5dc65', { key: 'Click', value: 1 }); window.music_modal.showModal() }} className="btn w-fit">
+                    <button onClick={() => { /*instance.current.action('59126862-ef2e-4b8d-8c1a-c1ac86e5dc65', { key: 'Click', value: 1 }); */ window.music_modal.showModal() }} className="btn w-fit">
                         Music Controls
                     </button>
                 </div>
