@@ -296,9 +296,11 @@ export function App() {
                             sec
                         </div>
                     </div>
-                    <button onClick={() => { /*instance.current.action('59126862-ef2e-4b8d-8c1a-c1ac86e5dc65', { key: 'Click', value: 1 }); */ window.music_modal.showModal() }} className="btn w-fit">
+                    {/*
+                    <button onClick={() => { instance.current.action('59126862-ef2e-4b8d-8c1a-c1ac86e5dc65', { key: 'Click', value: 1 });  window.music_modal.showModal() }} className="btn w-fit">
                         Music Controls
                     </button>
+                    */}
                 </div>
             </div>
         </>
