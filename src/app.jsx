@@ -21,7 +21,7 @@ export function App() {
     const [days, setDays] = useState(0);
 
     const getTime = () => {
-        const countDownDate = new Date("Dec 25, 2023 00:00:00").getTime();
+        const countDownDate = new Date("Dec 25, 2024 00:00:00").getTime();
         const now = new Date().getTime();
         const timeleft = countDownDate - now;
 
