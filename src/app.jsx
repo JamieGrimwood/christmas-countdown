@@ -148,6 +148,7 @@ export function App() {
             >
                 <Snowfall snowflakeCount={2000} />
             </motion.div>
+            {/*
             <div className="fixed top-10 left-1/2 transform -translate-x-1/2 mt-4 z-50 card bg-neutral text-neutral-content">
                 <div className="card-body">
                     <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-red-500 to-yellow-500">
@@ -155,6 +156,7 @@ export function App() {
                     </p>
                 </div>
             </div>
+            */}
             <ul class="lightrope">
                 <li></li>
                 <li></li>
